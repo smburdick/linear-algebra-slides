@@ -1,9 +1,7 @@
 \documentclass{beamer}
-%Information to be included in the title page:
 \title{Advanced Linear Algebra for\\Quantum Error Correction}
 \author{Sam Burdick}
-\institute{Topological Quantum Error Correction
-}
+\institute{Topological Quantum Error Correction}
 \date{\today}
 
 \usepackage{ragged2e}
@@ -594,7 +592,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{A five-qubit code}
     \begin{block}{Example}
-        We can use $m=4$ stabilizers to perform error detection using $n=5$ physical qubits. Let's tabulate:
+        We can use $m=4$ stabilizers to perform error detection using $n=5$ physical qubits:
         \begin{center}
             \begin{tabular}{c|c|c|c}
                 Stabilizer & Pauli string & $X$ bits ($H_X)$ & $Z$ bits ($H_Z$) \\
@@ -619,10 +617,10 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
         \end{pmatrix}$.
     \end{block}
     \begin{block}{Definition}
-        The symplectic error vector $\vec e=(e_x |e_z)$ represents the location of errors. In $e_x$, a 1 at index $i$ means an $X$ error occurred on physical qubit $i$, and likewise for $e_z$ and $Z$ errors.
+        The symplectic error vector $\vec e=(e_x |e_z) \in \F_2^{2n}$ represents the location of errors. In $e_x$, a 1 at index $i$ means an $X$ error occurred on physical qubit $i$, and likewise for $e_z$ and $Z$ errors.
     \end{block}
     \begin{block}{Definition}
-        The symplectic syndrome vector $\vec s$ is defined as $\vec s = H_c\Omega\vec e^T$. Note that $\vec s$ is $m$-dimensional, corresponding to detection events of the $m$ stabilizers in the code. Given a syndrome vector $\vec s$, we must compute the error vector $\vec e$ to locate the $X$ and $Z$ errors on any of the $n$ physical qubits.
+        The symplectic syndrome vector $\vec s \in \F_2^m$ is defined as $\vec s = H_c\Omega\vec e^T$. Note that $\vec s$ icorresponds to detection events of the $m$ stabilizers in the code. Given a syndrome vector $\vec s$, we must compute the error vector $\vec e$ to locate the $X$ and $Z$ errors on any of the $n$ physical qubits.
     \end{block}
 \end{frame}
 
@@ -745,10 +743,8 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
     \end{block}
     \begin{block}{Remark}
         The expectation value corresponds to the probabilistic expected value of an experiment measuring an observable $A$ on $\ket\psi$.
-    \end{block}
-    \begin{block}{Remark}
-        The expectation value is analogous to the expected value of a random variable $X$ which has a probability density function $f(x)$ satisfying
-        $$ p(a \leq X \leq b) = \int_a^b f(x)dx \text{ and } \mathbb E[X]= \int_{-\infty}^\infty xf(x)dx. $$
+        It is analogous to the expected value of a random variable $X$ which has a probability density function $f(x)$ satisfying
+        $$ p(a \leq X \leq b) = \int_a^b f(x)dx \text{ and } \mathbb E[X]= \int_{-\infty}^{+\infty} xf(x)dx. $$
     \end{block}
 \end{frame}
 
@@ -769,6 +765,9 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
 \begin{frame}{Application: the uncertainty principle (cont'd)}
     \begin{block}{Exercise}
         Verify the Robertson uncertainty relation for each distinct pair of Pauli matrices. (Hint: compute the expectation values in terms of basis vectors.)
+    \end{block}
+    \begin{block}{Exercise}
+    	Does the Robertson uncertainty principle hold for commuting Hermitian operators? What about unitary operators?
     \end{block}
     \begin{flushright}
         \textit{Information is the resolution of uncertainty.}\\---Claude Shannon
