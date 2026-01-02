@@ -398,7 +398,7 @@ You can take Kronecker products of matrices as well; the new object's dimension 
         \end{pmatrix}$.
     \end{block}
     \begin{block}{Remark}
-        Stabilizers are Kronecker products of many Pauli operators, for example $XXXX$ or $ZZZZ$ which have a more compact binary representation we'll explore later.
+        Stabilizers are Kronecker products of many Pauli operators, for example $X^{\otimes 4} = XXXX$ or $ZZZZ$ which have a more compact binary representation we'll explore later.
     \end{block}
     \begin{flushright}
         \textit{God created the integers; all else is the work of man.}\\---Leopold Kronecker
@@ -579,7 +579,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{Stabilizers (cont'd)}
     \begin{block}{Example}
-        The 4-qubit stabilizer with Pauli string $XXXX$ can be represented as the bit vector $(1111|0000)$, and $XZXZ$ is $(1010|0101)$.
+        The 4-qubit stabilizer with Pauli string $X^{\otimes 4} = XXXX$ can be represented as $(1111|0000)$, and $XZXZ$ as $(1010|0101)$.
     \end{block}
     \begin{block}{Definition}
         The symplectic inner product of two vectors $\vec u, \vec v \in \F_2^{2n}$ is defined as
@@ -592,7 +592,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{A five-qubit code}
     \begin{block}{Example}
-        We can use $m=4$ stabilizers to perform error detection using $n=5$ physical qubits:
+        We can use $m=4$ stabilizers to perform quantum error detection using $n=5$ physical qubits:
         \begin{center}
             \begin{tabular}{c|c|c|c}
                 Stabilizer & Pauli string & $X$ bits ($H_X)$ & $Z$ bits ($H_Z$) \\
@@ -606,23 +606,77 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
     This encodes $k=n-m=1$ logical qubit.
     \end{block}
     \begin{block}{Definition}
-        The parity check (or, Hamming) matrix $H_c$ for an $n$-qubit code is a $m \times 2n$ matrix defined via concatenation as $H_c=[H_X | H_Z]$.
+        The parity check (or, Hamming) matrix $H$ for an $n$-qubit code is a $m \times 2n$ matrix defined via concatenation as $H=[H_X | H_Z]$.
     \end{block}
 \end{frame}
 
 \begin{frame}{A five-qubit code (cont'd)}
     \begin{block}{Definition}
-        The symplectic Gram matrix is defined as $\Omega = \begin{pmatrix}
+        The symplectic $2n \times 2n$ Gram matrix is defined as $$\Omega = \begin{pmatrix}
             \O_n & I_n \\ I_n & \O_n
-        \end{pmatrix}$.
+        \end{pmatrix}. $$
     \end{block}
     \begin{block}{Definition}
         The symplectic error vector $\vec e=(e_x |e_z) \in \F_2^{2n}$ represents the location of errors. In $e_x$, a 1 at index $i$ means an $X$ error occurred on physical qubit $i$, and likewise for $e_z$ and $Z$ errors.
     \end{block}
     \begin{block}{Definition}
-        The symplectic syndrome vector $\vec s \in \F_2^m$ is defined as $\vec s = H_c\Omega\vec e^T$. Note that $\vec s$ icorresponds to detection events of the $m$ stabilizers in the code. Given a syndrome vector $\vec s$, we must compute the error vector $\vec e$ to locate the $X$ and $Z$ errors on any of the $n$ physical qubits.
+        The symplectic syndrome vector $\vec s \in \F_2^m$ is defined as $\vec s = H\Omega\vec e^T$. Note that $\vec s$ corresponds to detection events of the $m$ stabilizers in the code. 
     \end{block}
 \end{frame}
+
+\begin{frame}{A five-qubit code (cont'd)}
+
+    \begin{block}{Remark}
+    	Given a syndrome vector $\vec s$, we must compute the error vector $\vec e$ to locate the $X$ and $Z$ errors on any of the $n$ physical qubits. This is a central problem in quantum error correction.
+	\end{block}
+	\begin{block}{Exercise}
+		Use a computer algebra system to compute possible solutions for $\vec e$ in the preceding example.
+	\end{block}
+\end{frame}
+
+\begin{frame}{The Steane code}
+	\begin{block}{Definition}
+		A code of distance $d$ can detect up to $d-1$ errors and reliably correct $\left\lfloor \frac{d-1}{2}\right \rfloor$ errors.
+	\end{block}
+	\begin{block}{Definition}
+		The Steane code is a $ [[ 7, 1, 3]] $ code, meaning that it comprises 7 physical qubits, one logical qubit, and has distance 3 (it can detect 2 qubit errors and correct one of them).
+		The check matrix is $$ H = \begin{pmatrix} 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 0 & 1 & 1 & 0 & 0 & 1 & 1 \\ 1 & 0 & 1 & 0 & 1 & 0 & 1 \end{pmatrix} $$
+	\end{block}
+\end{frame}
+
+\begin{frame}{The Steane code (cont'd)}
+	\begin{block}{Remark}
+		The Steane code as six stabilizer generators, which correspond to the rows of $H$:
+		\begin{align*}
+			S_1 &= I I I X X X X \\
+			S_2 &= I X X I I X X \\
+			S_3 &= X I X I X I X \\
+			S_4 &= I I  I Z Z Z Z \\
+			S_5 &= I Z Z I I Z Z \\
+			S_6 &= Z I Z I Z I Z
+		\end{align*}
+	\end{block}
+	\begin{block}{Definition}
+		A logical state $\ket\psi_L$ is defined as a state that is in the $+1$ eigenstate of any matrix product of stabilizer generators $S$, so $$S\ket\psi_L = +1\ket\psi_L .$$
+	\end{block}
+\end{frame}
+
+\begin{frame}{The Steane code (cont'd)}
+	\begin{block}{Definition}
+		A logical operator $X_L$ or $Z_L$ interacts with a logical state $\ket\psi_L$. We say that logical operators form equivalence classes with respect to stabilizer products: $L = SL$ for any logical operator $L$ and stabilizer product $S$.
+	\end{block}
+\end{frame}
+
+\begin{frame}{The Steane code (cont'd)}
+	\begin{block}{Remark}
+		The Steane code can be illustrated using the geometry of the Fano plane (7 lines, 7 points):
+		\begin{center}
+			\includegraphics[width=0.25\textwidth]{Fano_plane.svg.png}
+		\end{center}
+		In this geometry, each point represents a physical qubit, and each line corresponds to a logical operator that touches 3 qubits.
+	\end{block}
+\end{frame}
+
 
 \begin{frame}{Spectral Theorem}
 
