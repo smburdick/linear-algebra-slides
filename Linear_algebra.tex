@@ -58,6 +58,7 @@
     \item Clifford gate conjugation
     \item Stabilizers
     \item A five-qubit code
+    \item The Steane code
     \item Spectral Theorem
     \item * Linear functionals and dual spaces
     \item * Riesz Representation Theorem
@@ -471,15 +472,13 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
     \begin{block}{Definition}
         A projection operator, denoted $\hat P$, when applied to a quantum state $\ket\psi \in \H$, where $\H$ is a Hilbert space, returns a vector in a subspace of $\H$ defined with respect to a specific state $\ket a$, and is defined as $$ \hat P_a = \ket a\bra{a}, $$ where $\ket a$ is in an orthonormal basis of $\H$.
     \end{block}
-    \begin{block}{Remark}
-        Projection operators are used to model quantum measurement; in quantum computing, they project a qubit into a specific basis, such as the $X$ or $Z$ basis (where only one of two outcomes are possible).
-    \end{block}
 \end{frame}
 
 \begin{frame}{Projection operators (cont'd)}
-    \begin{block}{Remark}
-    Projection operators are idempotent, meaning that $\hat P^2 = \hat P$, and Hermitian, meaning that $\hat P^\dagger = \hat P$.
+	    \begin{block}{Remark}
+        Projection operators are used to model quantum measurement; in quantum computing, they project a qubit into a specific basis, such as the $X$ or $Z$ basis (where only one of two outcomes are possible).
     \end{block}
+
     \begin{block}{Example}
         For a single qubit in the general state $\ket\psi=\alpha\ket0 + \beta\ket1$, a measurement in the $Z$ basis $\{\ket0,\ket1\}$ is described by two projection operators:
         \begin{itemize}
@@ -487,15 +486,26 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
             \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$; note that $p(1) = |\beta|^2$
         \end{itemize}
     \end{block}
-    \begin{block}{Remark}
+
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+	    \begin{block}{Remark}
+    Projection operators are idempotent, meaning that $\hat P^2 = \hat P$, and Hermitian, meaning that $\hat P^\dagger = \hat P$.
+    \end{block}
+	    \begin{block}{Remark}
         The probability of measuring $\ket\psi$ as $\ket a$ can be computed as $$ p(a) = |\braket{a|\psi}|^2  = \bra \psi \hat P_a\ket\psi.$$
+    \end{block}
+	  \begin{block}{Exercise}
+        Compute the matrices $\hat P_0$ and $\hat P_1$.
+    \end{block}
+    \begin{block}{Exercise}
+    	Show that any projection operator $\hat P$ is not unitary.
     \end{block}
 \end{frame}
 
 \begin{frame}{Projection operators (cont'd)}
-    \begin{block}{Exercise}
-        Compute the matrices $\hat P_0$ and $\hat P_1$, then show that any projection operator is not unitary.
-    \end{block}
+
     \begin{block}{Definition}
         The CNOT gate has the following matrix representation: $$ \CNOT = \begin{pmatrix}
             I & \O \\ \O & X
@@ -509,7 +519,9 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
     \begin{block}{Exercise}
         Show that the conditional action of the CNOT gate can be written as $$ \CNOT = (\ket0\bra0\otimes I) + (\ket1\bra1\otimes X).$$
     \end{block}
-
+	\begin{flushright}
+		\textit{Compliments and criticism are all ultimately based on some form of projection.}\\---Billy Corgan
+	\end{flushright}
 \end{frame}
 
 \begin{frame}{Clifford gate conjugation}
@@ -519,14 +531,14 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
     \begin{block}{Remark}
         Any Clifford operator can be generated from Hadamard, $\CNOT$, and/or $S$ operators. The Pauli operators are themselves Clifford operators. The ``Clifford + $T$'' gates suffice to construct any quantum circuit.
     \end{block}
-    \begin{flushright}
-        \textit{In our implementation of a quantum [CNOT] logic gate, the target qubit $\ket S$ is spanned by two $^2 S_{1/2}$ hyperfine ground states of a single $^9\textnormal{Be}^+$ ion ...}\\---C. Monroe \textit{et al} [1995]
-     \end{flushright}
+   % \begin{flushright}
+    %    \textit{In our implementation of a quantum [CNOT] logic gate, the target qubit $\ket S$ is spanned by two $^2 S_{1/2}$ hyperfine ground states of a single $^9\textnormal{Be}^+$ ion ...}\\---C. Monroe \textit{et al} [1995]
+     %\end{flushright}
 \end{frame}
 
 \begin{frame}{Clifford gate conjugation (cont'd)}
         \begin{block}{Example}
-        The movement of an $X$ error through the control of a CNOT gate looks like:
+        The movement of an $X$ error through the control qubit of a CNOT gate looks like:
         %$$
         %\begin{quantikz}
           %  &\push{X}&\ctrl{1}&\\
@@ -595,7 +607,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
         We can use $m=4$ stabilizers to perform quantum error detection using $n=5$ physical qubits:
         \begin{center}
             \begin{tabular}{c|c|c|c}
-                Stabilizer & Pauli string & $X$ bits ($H_X)$ & $Z$ bits ($H_Z$) \\
+                Stabilizer & Pauli string & $X$ bits ($\mathbf H_X)$ & $Z$ bits ($\mathbf H_Z$) \\
                 \hline
                  $S_1$ & $XZZXI$ & 10010 & 01100 \\
                  $S_2$ & $IXZZX$ & 01001 & 00110 \\
@@ -606,21 +618,21 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
     This encodes $k=n-m=1$ logical qubit.
     \end{block}
     \begin{block}{Definition}
-        The parity check (or, Hamming) matrix $H$ for an $n$-qubit code is a $m \times 2n$ matrix defined via concatenation as $H=[H_X | H_Z]$.
+        The parity check (or, Hamming) matrix $\mathbf H$ for an $n$-qubit code is a $m \times 2n$ matrix defined via concatenation as $\mathbf H=[\mathbf H_X | \mathbf H_Z]$.
     \end{block}
 \end{frame}
 
 \begin{frame}{A five-qubit code (cont'd)}
     \begin{block}{Definition}
-        The symplectic $2n \times 2n$ Gram matrix is defined as $$\Omega = \begin{pmatrix}
+        The symplectic $2n \times 2n$ Gram matrix is defined as $$\mathbf\Omega = \begin{pmatrix}
             \O_n & I_n \\ I_n & \O_n
         \end{pmatrix}. $$
     \end{block}
     \begin{block}{Definition}
-        The symplectic error vector $\vec e=(e_x |e_z) \in \F_2^{2n}$ represents the location of errors. In $e_x$, a 1 at index $i$ means an $X$ error occurred on physical qubit $i$, and likewise for $e_z$ and $Z$ errors.
+        The symplectic error vector $\vec e=(\vec e_X |\vec e_Z) \in \F_2^{2n}$ represents the location of errors. In $\vec e_X$, a 1 at index $i$ means an $X$ error occurred on physical qubit $i$, and likewise for $\vec e_Z$ and $Z$ errors.
     \end{block}
     \begin{block}{Definition}
-        The symplectic syndrome vector $\vec s \in \F_2^m$ is defined as $\vec s = H\Omega\vec e^T$. Note that $\vec s$ corresponds to detection events of the $m$ stabilizers in the code. 
+        The symplectic syndrome vector $\vec s \in \F_2^m$ is defined as $\vec s = \mathbf H \mathbf \Omega\vec e^T$. Note that $\vec s$ corresponds to detection events of the $m$ stabilizers in the code. 
     \end{block}
 \end{frame}
 
@@ -632,6 +644,9 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 	\begin{block}{Exercise}
 		Use a computer algebra system to compute possible solutions for $\vec e$ in the preceding example.
 	\end{block}
+	\begin{flushright}
+		\textit{Give me the fruitful error any time, full of seeds, bursting with its own corrections.}\\---Vilfredo Pareto
+	\end{flushright}
 \end{frame}
 
 \begin{frame}{The Steane code}
@@ -640,13 +655,13 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 	\end{block}
 	\begin{block}{Definition}
 		The Steane code is a $ [[ 7, 1, 3]] $ code, meaning that it comprises 7 physical qubits, one logical qubit, and has distance 3 (it can detect 2 qubit errors and correct one of them).
-		The check matrix is $$ H = \begin{pmatrix} 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 0 & 1 & 1 & 0 & 0 & 1 & 1 \\ 1 & 0 & 1 & 0 & 1 & 0 & 1 \end{pmatrix} $$
+		The check matrix is $$ \mathbf H = \begin{pmatrix} 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 0 & 1 & 1 & 0 & 0 & 1 & 1 \\ 1 & 0 & 1 & 0 & 1 & 0 & 1 \end{pmatrix} $$
 	\end{block}
 \end{frame}
 
 \begin{frame}{The Steane code (cont'd)}
 	\begin{block}{Remark}
-		The Steane code as six stabilizer generators, which correspond to the rows of $H$:
+		The Steane code as six stabilizer generators, which correspond to the rows of $\mathbf H$:
 		\begin{align*}
 			S_1 &= I I I X X X X \\
 			S_2 &= I X X I I X X \\
@@ -656,14 +671,34 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 			S_6 &= Z I Z I Z I Z
 		\end{align*}
 	\end{block}
+
+\end{frame}
+
+\begin{frame}{The Steane code (cont'd)}
+		\begin{block}{Definition}
+		A logical state $\ket\psi_L$ is defined as a state that is a simultaneous $+1$ eigenstate of any matrix product of stabilizer generators $S$, so $$S\ket\psi_L = +1\ket\psi_L .$$ We say that any such product of stabilizers is a member of the stabilizer group. Such a group is generated by the minimal set $\mathcal S = \{ S_1, \ldots, S_n \}$, where $[S_i, S_j] = \O$ for all distinct $S_i,S_j \in \mathcal S$.  Such a state serves a fault-tolerant quantum computation.
+	\end{block}
+	\begin{block}{Remark}
+		Compilers like Stim don't actually track all $2^n$ entries in a logical state, but instead track members of the stabilizer group. In this view, we consider the evolution of operators that affect the state, not the evolution of the state itself.
+	\end{block}
+
+\end{frame}
+
+\begin{frame}{The Steane code (cont'd)}
 	\begin{block}{Definition}
-		A logical state $\ket\psi_L$ is defined as a state that is in the $+1$ eigenstate of any matrix product of stabilizer generators $S$, so $$S\ket\psi_L = +1\ket\psi_L .$$
+		A logical Pauli operator $X_L$ or $Z_L$ interacts with a logical state $\ket\psi_L$. We say that logical operators form equivalence classes with respect to stabilizer products: $L \equiv SL$ for any logical operator $L$ and stabilizer product $S$ because $\ket\psi_L$ is the $+1$ eigenstate of $S$.
+	\end{block}
+	\begin{block}{Example}
+		If we prepare the logical state as $\ket 0 _L$, a sufficient number of physical $X$ errors could impact the logical state, as detected by syndrome measurements. Thus, we apply logical $X$: $$ X_L \ket 0 _L = \ket 1_L. $$
 	\end{block}
 \end{frame}
 
 \begin{frame}{The Steane code (cont'd)}
 	\begin{block}{Definition}
-		A logical operator $X_L$ or $Z_L$ interacts with a logical state $\ket\psi_L$. We say that logical operators form equivalence classes with respect to stabilizer products: $L = SL$ for any logical operator $L$ and stabilizer product $S$.
+		A logical Clifford operator $U_L$ maps a stabilizer $S_i$ to another stabilizer in its group, $S_j$: $$ U_L S_i U_L^\dagger = S_j $$
+	\end{block}
+	\begin{block}{Remark}
+		The non-Clifford operator $T_L$ doesn't have a simple linear (symplectic) representation, making it a challenge to implement in TQEC.
 	\end{block}
 \end{frame}
 
