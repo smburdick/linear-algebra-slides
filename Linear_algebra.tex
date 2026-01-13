@@ -6,6 +6,9 @@
 
 \usepackage{ragged2e}
 \usepackage{multicol}
+%\usepackage{fourier}
+\newcommand*{\TakeFourierOrnament}[1]{{%
+\fontencoding{U}\fontfamily{futs}\selectfont\char#1}}
 
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
@@ -17,6 +20,8 @@
 \newcommand{\CNOT}{\text{CNOT}}
 \renewcommand{\H}{\mathcal{H}}
 \renewcommand{\vec}{\textbf}
+\newcommand{\rank}{\text{rank}}
+%\newcommand{\det}{\text{det}}
 
 \usepackage{braket}
 \usepackage{hyperref}
@@ -38,8 +43,7 @@
 
 \frame{\titlepage}
 
-\begin{frame}
-\frametitle{Agenda}
+\begin{frame}{Part I: Mathematical foundations}
 \begin{multicols}{2}
     \begin{enumerate}
     \item Vector spaces
@@ -49,23 +53,50 @@
     \item Dirac notation
     \item Subspaces
     \item Orthonormal basis
-    \item Eigenstates
-    \item Unitary matrices
-    \item The Kronecker product
-    \item The commutator
+    \item Matrix rank
     \item Matrix trace
+    \item Eigenstates
+    \item The commutator
+    \item Normal matrices
+    \item The Kronecker product
     \item Projection operators
+    %\item * A bit of group theory
+    \end{enumerate}
+\end{multicols}
+\end{frame}
+
+\begin{frame}{Part II: A tour of quantum error correction}
+%\begin{multicols}{1}
+\begin{enumerate}
     \item Clifford gate conjugation
     \item Stabilizers
     \item A five-qubit code
     \item The Steane code
+    %\item The surface code
+\end{enumerate}
+%\end{multicols}
+\end{frame}
+
+%\begin{frame}{Appendix A: The math you may have missed}
+%\begin{enumerate}
+%	\item Complex numbers
+%	\item Summation notation
+%	\item Vectors
+%	\item Matrices
+%	\item Set theory
+%	\item Probability theory
+%	\item Proof techniques
+%\end{enumerate}
+%\end{frame}
+
+\begin{frame}{Appendix: Advanced applications in quantum mechanics}
+\begin{enumerate}
     \item Spectral Theorem
-    \item * Linear functionals and dual spaces
-    \item * Riesz Representation Theorem
-    \item * Application: the uncertainty principle
-    \end{enumerate}
-\end{multicols}
-* indicates supplemental content
+    \item Linear functionals and dual spaces
+    \item Riesz Representation Theorem
+    \item The uncertainty principle
+    %\item * Application: density matrix
+\end{enumerate}
 \end{frame}
 
 \begin{frame}{To the reader}
@@ -287,6 +318,45 @@ $$
 
 % \end{frame}
 
+\begin{frame}{Matrix rank}
+\begin{block}{Definition}
+	The rank of a matrix $A$, denoted $\rank(A)$, is the dimension of the vector space spanned by its columns.
+\end{block}
+
+\begin{block}{Example}
+	The matrix $$ \begin{pmatrix} 1 & 0 & 1 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} $$ has rank 2, since the third column can be expressed as a sum of the first two columns. The first 2 columns span a subspace of $\C^3$. As an exercise, use set-builder notation to define this subspace.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Matrix trace}
+
+\begin{block}{Definition}
+The trace of an $n \times n$ matrix $A$ is the sum of its diagonal elements; that is $$\tr(A) = \sum_{k=1}^n A_{k,k}$$
+\end{block}
+
+\begin{block}{Remark}
+Trace is ``commutativity-preserving,'' meaning $\tr(AB)=\tr(BA)$ for any matrices $A,B$.
+\end{block}
+
+\begin{block}{Remark}
+The trace is independent of a chosen basis, meaning that if a linear map $A$, represented by a matrix, has a change of basis matrix $P$ such that $B=P^{-1}AP$, then $\tr(A)=\tr(B)$.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Matrix trace (cont'd)}
+    \begin{block}{Exercise}
+        Show that $\tr(P)=0$ for each non-identity Pauli operator $P$.
+    \end{block}
+    \begin{block}{Exercise}
+        Show that $\tr(XZ)=\tr(ZX)$.
+    \end{block}
+    \begin{flushright}
+    \textit{It is by tracing things to their origin,\\that we learn to understand them ...}\\---Thomas Paine
+\end{flushright}
+\end{frame}
+
 \begin{frame}{Eigenstates}
 \begin{block}{Definition}
 A state vector $\ket\psi$ is the $\lambda$-eigenstate (or eigenvector) of a linear map $U$ if $U\ket\psi = \lambda \ket\psi$ for some $\lambda \in \R,$ where $\lambda$ is said to be an eigenvalue of $U$ (and corresponds to a measurement of a qubit).
@@ -296,6 +366,18 @@ A state vector $\ket\psi$ is the $\lambda$-eigenstate (or eigenvector) of a line
 If $U\ket\psi = \ket\psi$, we say that $\ket\psi$ is the $+1$ eigenstate of $U$.
 \end{block}
 
+\begin{block}{Algorithm}
+To find the eigenvalues ($\lambda$) of a square matrix $A$, we may solve its characteristic equation: $$ \det(A - \lambda I) = \O $$
+The eigenvalues of a $2\times2$ matrix are the roots of its characteristic polynomial $ax^2 + bx + c = 0$, where $a = 1$, $b = -\tr(A)$, and $c=\det(A)$.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Eigenstates (cont'd)}
+
+\begin{block}{Exercise}
+	Find the eigenvalues of the Pauli matrices $\{I, X, Y, Z\}$.
+\end{block}
 
 \begin{block}{Exercise}
 Show that $\ket+$ and $\ket-$ are the $+1$ and $-1$ eigenstates of $X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, respectively.
@@ -311,12 +393,46 @@ Show that $\ket0$ and $\ket 1$ are the $+1$ and $-1$ eigenstates of $Z = \begin{
 \end{block}
 
 \end{frame}
-\begin{frame}{Unitary matrices}
+
+\begin{frame}{The commutator}
+
+\begin{block}{Definition}
+    Two matrices $A$ and $B$ are said to commute if $AB=BA$.
+\end{block}
+
+\begin{block}{Remark}
+For quantum operators $A$ and $B$, $(AB)\ket\psi$ means ``apply $B$ first, then $A$, on $\ket\psi$.''
+\end{block}
+
+\begin{block}{Definition}
+    The commutator of two matrices is defined as $[A,B]= AB-BA$.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{The commutator (cont'd)}
+
+\begin{block}{Corollary}
+    For commuting matrices, $[A,B]=\mathcal O$ (the zero matrix).
+\end{block}
+
+\begin{block}{Exercise}
+Show that $[X,Z] = -2iY$, where $Y=\begin{pmatrix}
+    0 & -i \\ i & 0
+\end{pmatrix}$.
+\end{block}
+
+\begin{flushright}
+    \textit{... policies that can make commuting shorter ... would be a straightforward way to reduce minor but widespread suffering.}\\---Daniel Kahneman
+\end{flushright}
+
+\end{frame}
+
+\begin{frame}{Normal matrices}
 
 \begin{block}{Definition}
     The conjugate of a matrix $U$ is denoted $U^*$ and obtained by conjugating each of its elements.
 \end{block}
-
 
 \begin{block}{Definition}
 The transpose of a matrix $U$ is denoted $U^T$ and is obtained by systematically exchanging (i.e., swapping) the values of the rows with the values in the columns in $U$.
@@ -335,7 +451,11 @@ The transpose of a matrix $U$ is denoted $U^T$ and is obtained by systematically
 \end{block}
 \end{frame}
 
-\begin{frame}{Unitary matrices (cont'd)}
+\begin{frame}{Normal matrices (cont'd)}
+
+\begin{block}{Definition}
+     A matrix $A$ is normal if it commutes with its adjoint, meaning $[A, A^\dagger]=\mathcal O$.
+\end{block}
 
 \begin{block}{Definition}
 A matrix $U$ is Hermitian if it is self-adjoint, that is, $U=U^\dagger.$
@@ -347,14 +467,26 @@ A matrix $U$ is unitary if $UU^\dagger = U^\dagger U = I.$
 
 \end{block}
 
+\begin{block}{Remark}
+In quantum mechanics, observables are Hermitian and operators are unitary. Henceforth, we shall denote a normal operators and observables represented by a matrix (and by extension, a linear map) $A$ as $\hat A$. The Pauli matrices are both, and we'll use regular matrix notation for those.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Normal matrices (cont'd)}
+
 \begin{block}{Exercise}
-    Show that the $S$ and $T$ gates are unitary but not Hermitian.
+    Show that the $\hat S$ and $\hat T$ operators are unitary but not Hermitian.
+\end{block}
+
+\begin{block}{Exercise}
+    Show that every unitary matrix and Hermitian matrix is normal.
 \end{block}
 
 \begin{block}{Exercise}
 Show that every quantum operator is unitary.
 
-\textit{Hint.} Use the fact that $\braket{\psi | \psi} = 1$ and substitute $\ket\psi$ for $U\ket\psi$ for an arbitrary operator $U$. Then use function composition rules.
+\textit{Hint.} Use the fact that $\braket{\psi | \psi} = 1$ and substitute $\ket\psi$ for $\hat U\ket\psi$ for an arbitrary operator $\hat U$. Then use function composition rules.
 
 \end{block}
 
@@ -399,70 +531,11 @@ You can take Kronecker products of matrices as well; the new object's dimension 
         \end{pmatrix}$.
     \end{block}
     \begin{block}{Remark}
-        Stabilizers are Kronecker products of many Pauli operators, for example $X^{\otimes 4} = XXXX$ or $ZZZZ$ which have a more compact binary representation we'll explore later.
+        Stabilizers are Kronecker products of many Pauli operators, for example $X^{\otimes 4} = XXXX$ or $ZZZZ$ which have a more compact binary representation we'll explore later. By convention, such products are known as Pauli strings, and aren't matrix products.
     \end{block}
-    \begin{flushright}
-        \textit{God created the integers; all else is the work of man.}\\---Leopold Kronecker
-    \end{flushright}
-\end{frame}
-
-\begin{frame}{The commutator}
-
-\begin{block}{Definition}
-    Two matrices $A$ and $B$ are said to commute if $AB=BA$.
-\end{block}
-
-\begin{block}{Remark}
-For quantum operators $A$ and $B$, $(AB)\ket\psi$ means ``apply $B$ first, then $A$, on $\ket\psi$.''
-\end{block}
-
-\begin{block}{Definition}
-    The commutator of two matrices is defined as $[A,B]= AB-BA$.
-\end{block}
-
-\begin{block}{Corollary}
-    For commuting matrices, $[A,B]=\mathcal O$ (the zero matrix).
-\end{block}
-
-\begin{block}{Exercise}
-Show that $[X,Z] = -2iY$, where $Y=\begin{pmatrix}
-    0 & -i \\ i & 0
-\end{pmatrix}$.
-\end{block}
-
-\begin{flushright}
-    \textit{... policies that can make commuting shorter ... would be a straightforward way to reduce minor but widespread suffering.}\\---Daniel Kahneman
-\end{flushright}
-    
-\end{frame}
-
-
-\begin{frame}{Matrix trace}
-
-\begin{block}{Definition}
-The trace of an $n \times n$ matrix $A$ is the sum of its diagonal elements; that is $$\tr(A) = \sum_{k=1}^n A_{k,k}$$
-\end{block}
-
-\begin{block}{Remark}
-Trace is ``commutativity-preserving,'' meaning $\tr(AB)=\tr(BA)$ for any matrices $A,B$.
-\end{block}
-
-\begin{block}{Remark}
-The trace is independent of a chosen basis, meaning that if a linear map $A$, represented by a matrix, has a change of basis matrix $P$ such that $B=P^{-1}AP$, then $\tr(A)=\tr(B)$.
-\end{block}
-
-\end{frame}
-
-\begin{frame}{Matrix trace (cont'd)}
-    \begin{block}{Exercise}
-        Show that $\tr(P)=0$ for each non-identity Pauli operator $P$.
-    \end{block}
-    \begin{block}{Exercise}
-        Show that $\tr(XZ)=\tr(ZX)$.
-    \end{block}
-    \begin{flushright}
-    \textit{It is by tracing things to their origin,\\that we learn to understand them ...}\\---Thomas Paine
-\end{flushright}
+    %\begin{flushright}
+     %   \textit{God created the integers; all else is the work of man.}\\---Leopold Kronecker
+    %\end{flushright}
 \end{frame}
 
 \begin{frame}{Projection operators}
@@ -482,8 +555,9 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
     \begin{block}{Example}
         For a single qubit in the general state $\ket\psi=\alpha\ket0 + \beta\ket1$, a measurement in the $Z$ basis $\{\ket0,\ket1\}$ is described by two projection operators:
         \begin{itemize}
-            \item Projection operator for outcome $\ket 0: \hat P_0 = \ket 0\bra0$; note that $p(0) = |\alpha|^2$
-            \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$; note that $p(1) = |\beta|^2$
+            \item Projection operator for outcome $\ket 0: \hat P_0 = \ket 0\bra0$
+            \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$
+            \item  Note that $p(0) = |\alpha|^2$ and  $p(1) = |\beta|^2$
         \end{itemize}
     \end{block}
 
@@ -526,7 +600,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{Clifford gate conjugation}
     \begin{block}{Definition}
-        A Clifford operator $C$ ``conjugates within'' the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' = CPC^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $C$.
+        A Clifford operator $\hat C$ ``conjugates within'' the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' = \hat C P \hat C^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $\hat C$.
     \end{block}
     \begin{block}{Remark}
         Any Clifford operator can be generated from Hadamard, $\CNOT$, and/or $S$ operators. The Pauli operators are themselves Clifford operators. The ``Clifford + $T$'' gates suffice to construct any quantum circuit.
@@ -551,7 +625,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
         \begin{center}
         \includegraphics[scale=0.2]{X_CNOT.jpeg}
         \end{center}
-        Using stabilizer notation, we represent this as $$(X_1 I_2) \xrightarrow{\CNOT_{1,2}} (X_1 X_2).$$ To demonstrate, let's use gate conjugation. The Clifford gate is $\CNOT$ and the Pauli operators are $X$ and $I$:
+        Using stabilizer notation, we represent this as $$(X_1 I_2) \xrightarrow{\hat \CNOT_{1,2}} (X_1 X_2).$$ To demonstrate, let's use gate conjugation. The Clifford gate is $\hat \CNOT$ and the Pauli operators are $X$ and $I$:
         $$ \CNOT(X\otimes I)\CNOT^\dagger = \begin{pmatrix}
             I & \O \\ \O & X
         \end{pmatrix}\begin{pmatrix}
@@ -565,16 +639,24 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 \begin{frame}{Clifford gate conjugation (cont'd)}
     \begin{block}{Exercise}
         Use Clifford gate conjugation to demonstrate the following error propagation rules:
-        $$ X \xrightarrow{H} Z \xrightarrow{H} X $$
-        $$ X \xrightarrow{S} Y \xrightarrow{S} -X $$
-        $$ I_1Z_1 \xrightarrow{\CNOT_{1,2}} Z_1Z_2 $$
-        $$ I_1X_2 \xrightarrow{\CNOT_{1,2}} I_1X_2$$
+        $$ X \xrightarrow{\hat H} Z \xrightarrow{H} X $$
+        $$ X \xrightarrow{\hat S} Y \xrightarrow{S} -X $$
+        $$ I_1Z_1 \xrightarrow{\hat \CNOT_{1,2}} Z_1Z_2 $$
+        $$ I_1X_2 \xrightarrow{\hat \CNOT_{1,2}} I_1X_2$$
     \end{block}
     \begin{flushright}
         \textit{Still round the corner there may wait\\
         A new road or a secret gate.}\\---J. R. R. Tolkien, \textit{The Hobbit}
     \end{flushright}
 \end{frame}
+
+%\begin{frame}{A bit of group theory}
+
+%\begin{block}{Warning}
+%This isn't strictly necessary to understand quantum error correction, since the mechanics of the stabilizer group can be understood purely in linear algebra terms.
+%\end{block}
+
+%\end{frame}
 
 \begin{frame}{Stabilizers}
     \begin{block}{Definition}
@@ -704,12 +786,12 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{The Steane code (cont'd)}
 	\begin{block}{Remark}
-		The Steane code can be illustrated using the geometry of the Fano plane (7 lines, 7 points):
+		The Steane code can be illustrated using the geometry of the Fano plane:
 		\begin{center}
 			\includegraphics[width=0.25\textwidth]{Fano_plane.svg.png}
 		\end{center}
-		In this geometry, each point represents a physical qubit, and each line corresponds to a logical operator that touches 3 qubits.
-	\end{block}
+		In this geometry, each point represents a physical qubit. Each line (including the circle) touches three qubits, and taking the complement of each line of qubits yields one of the stabilizers. Six of these complements correspond to the six stabilizer generators (three $X$ stabilizers, three $Z$ stabilizers). The last line represents logical $Z$.
+ 		\end{block}
 \end{frame}
 
 
@@ -721,10 +803,6 @@ A diagonal matrix is a matrix such that all entries outside the main diagonal ar
 
 \begin{block}{Definition}
 The spectrum of a matrix $A$ is the set of all eigenvalues of $A$.
-\end{block}
-
-\begin{block}{Definition}
-     A matrix $A$ is normal if $[A, A^\dagger]=\mathcal O$.
 \end{block}
 
 \begin{block}{Theorem}
@@ -754,9 +832,7 @@ If a matrix $A$ is normal, then $A$ is unitarily diagonalizable, meaning that $A
 The spectral theorem tells us that, since the Pauli matrices $\{X,Y,Z\}$ are Hermitian, their eigenvalues are $\pm 1$ and their eigenvectors form a mutually orthogonal and complete basis of the qubit state space $\C^2$, justifying their use as the fundamental observables of a qubit. The Pauli matrices create a basis for all $2\times2$ Hermitian matrices.
 \end{block}
 
-\begin{block}{Exercise}
-    Show that every unitary matrix and Hermitian matrix is normal.
-\end{block}
+
 
 \begin{flushright}
     \textit{I consider nature a vast chemical laboratory in which all kinds of composition and decompositions are formed.}\\---Antoine Lavoisier
@@ -832,8 +908,8 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
     \end{block}
     \begin{block}{Remark}
         The expectation value corresponds to the probabilistic expected value of an experiment measuring an observable $A$ on $\ket\psi$.
-        It is analogous to the expected value of a random variable $X$ which has a probability density function $f(x)$ satisfying
-        $$ p(a \leq X \leq b) = \int_a^b f(x)dx \text{ and } \mathbb E[X]= \int_{-\infty}^{+\infty} xf(x)dx. $$
+        It is analogous to the expected value $E$ of a random variable $X$ which has a probability density function $f(x)$ satisfying
+        $$ p(a \leq X \leq b) = \int_a^b f(x)dx \text{ and } E[X]= \int_{-\infty}^{+\infty} xf(x)dx. $$
     \end{block}
 \end{frame}
 
