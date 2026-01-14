@@ -9,6 +9,7 @@
 %\usepackage{fourier}
 \newcommand*{\TakeFourierOrnament}[1]{{%
 \fontencoding{U}\fontfamily{futs}\selectfont\char#1}}
+\usepackage{comment}
 
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
@@ -77,17 +78,19 @@
 %\end{multicols}
 \end{frame}
 
-%\begin{frame}{Appendix A: The math you may have missed}
-%\begin{enumerate}
-%	\item Complex numbers
-%	\item Summation notation
-%	\item Vectors
-%	\item Matrices
-%	\item Set theory
-%	\item Probability theory
-%	\item Proof techniques
-%\end{enumerate}
-%\end{frame}
+\begin{comment}
+\begin{frame}{Appendix A: The math you may have missed}
+\begin{enumerate}
+	\item Complex numbers
+	\item Summation notation
+	\item Vectors
+	\item Matrices
+	\item Set theory
+	\item Probability theory
+	\item Proof techniques
+\end{enumerate}
+\end{frame}
+\end{comment}
 
 \begin{frame}{Appendix: Advanced applications in quantum mechanics}
 \begin{enumerate}
@@ -147,12 +150,6 @@ Suppose $V$ is a vector space. Then a minimum cardinality subset $\mathcal{B} \s
 \end{block}
     
 \end{frame}
-
-% \begin{frame}{Linear independence and basis vectors (cont'd)}
-%     \begin{block}{Example}
-%         In quantum computing, the most common bases for a single 
-%     \end{block}
-% \end{frame}
 
 \begin{frame}{Linear maps}
 
@@ -265,9 +262,6 @@ $$
     \begin{block}{Definition}
         A set $W$ is a subspace of a vector space $V$ if $W$ is itself a vector space and $W\subseteq V$.
     \end{block}
-    % \begin{block}{Example}
-    %     The vector space $$W = \left\{ \begin{pmatrix} a_0 \\ a_1 \\ a_2 \\ 0 \end{pmatrix}: a_0,a_1,a_2 \in \C \right \}$$ is a subspace of the vector space $\C^4$.
-    % \end{block}
     \begin{block}{Example}
         Consider the Bell pair $ \ket{\Phi^+}= \frac{\ket{00} + \ket{11}}{\sqrt2} $. The state vector $\ket{\Phi^+}$ is a member of the (maximally entangled) subspace defined as
         $$ B= \left\{ \alpha\ket{00} + \beta\ket{11} : \alpha,\beta \in \C,\text{ } |\alpha|^2 + |\beta|^2 = 1 \right\}. $$
@@ -287,10 +281,6 @@ $$
     An orthonormal basis is a set of basis vectors $\B$ in a vector space with a Euclidean norm of $1$, meaning $\sqrt{\sum_{k=1}^n |\psi_k|^2} = 1$ for all $\ket\psi \in \B$, and every pair of distinct vectors $\ket\phi,\ket\psi \in \B$ is orthogonal, meaning $\braket{\phi | \psi} = 0$.
 \end{block}
 
-% \begin{block}{Example}
-%     The Euclidean basis vectors form an orthonormal basis of $\C^n$; for $n=4$ they are $$ \left \{ \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix} \right \} $$ 
-% \end{block}
-
 \begin{block}{Exercise}
     Show that the sets $\{ \ket0 ,\ket1 \}$ and $ \{ \ket+, \ket-\}$ are both orthonormal bases of the single-qubit vector space $\C^2$.
 \end{block}
@@ -304,19 +294,6 @@ $$
 \end{flushright}
 
 \end{frame}
-% \begin{frame}{Orthonormal basis (cont'd)}
-
-% \begin{block}{Exercise (ChatGPT)}
-% Consider the 3-qubit bit-flip code with stabilizer generators $Z_1Z_2$ and $Z_2Z_3$.
-% \begin{itemize}
-%     \item Identify the code space and give an orthonormal basis for it.
-%     \item  Apply the single-qubit error operators $X_1$, $X_2$, and $X_3$ to the basis states of the code space to generate the corresponding error spaces.
-%     \item Show that each error space is a two-dimensional subspace orthogonal to the code space and to each other.
-%     \item Verify that the set of all these subspaces forms an orthogonal decomposition of the full 3-qubit vector space.
-% \end{itemize}
-% \end{block}
-
-% \end{frame}
 
 \begin{frame}{Matrix rank}
 \begin{block}{Definition}
@@ -467,16 +444,12 @@ A matrix $U$ is unitary if $UU^\dagger = U^\dagger U = I.$
 
 \end{block}
 
-\begin{block}{Remark}
-In quantum mechanics, observables are Hermitian and operators are unitary. Henceforth, we shall denote a normal operators and observables represented by a matrix (and by extension, a linear map) $A$ as $\hat A$. The Pauli matrices are both, and we'll use regular matrix notation for those.
-\end{block}
-
 \end{frame}
 
 \begin{frame}{Normal matrices (cont'd)}
 
 \begin{block}{Exercise}
-    Show that the $\hat S$ and $\hat T$ operators are unitary but not Hermitian.
+    Show that the $S$ and $T$ operators are unitary but not Hermitian.
 \end{block}
 
 \begin{block}{Exercise}
@@ -486,7 +459,7 @@ In quantum mechanics, observables are Hermitian and operators are unitary. Hence
 \begin{block}{Exercise}
 Show that every quantum operator is unitary.
 
-\textit{Hint.} Use the fact that $\braket{\psi | \psi} = 1$ and substitute $\ket\psi$ for $\hat U\ket\psi$ for an arbitrary operator $\hat U$. Then use function composition rules.
+\textit{Hint.} Use the fact that $\braket{\psi | \psi} = 1$ and substitute $\ket\psi$ for $U\ket\psi$ for an arbitrary operator $U$. Then use function composition rules.
 
 \end{block}
 
@@ -600,7 +573,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{Clifford gate conjugation}
     \begin{block}{Definition}
-        A Clifford operator $\hat C$ ``conjugates within'' the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' = \hat C P \hat C^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $\hat C$.
+        A Clifford operator $C$ ``conjugates within'' the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' =  C P  C^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $\hat C$.
     \end{block}
     \begin{block}{Remark}
         Any Clifford operator can be generated from Hadamard, $\CNOT$, and/or $S$ operators. The Pauli operators are themselves Clifford operators. The ``Clifford + $T$'' gates suffice to construct any quantum circuit.
@@ -625,7 +598,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
         \begin{center}
         \includegraphics[scale=0.2]{X_CNOT.jpeg}
         \end{center}
-        Using stabilizer notation, we represent this as $$(X_1 I_2) \xrightarrow{\hat \CNOT_{1,2}} (X_1 X_2).$$ To demonstrate, let's use gate conjugation. The Clifford gate is $\hat \CNOT$ and the Pauli operators are $X$ and $I$:
+        Using stabilizer notation, we represent this as $$(X_1 I_2) \xrightarrow{\CNOT_{1,2}} (X_1 X_2).$$ To demonstrate, let's use gate conjugation. The Clifford gate is $\CNOT$ and the Pauli operators are $X$ and $I$:
         $$ \CNOT(X\otimes I)\CNOT^\dagger = \begin{pmatrix}
             I & \O \\ \O & X
         \end{pmatrix}\begin{pmatrix}
@@ -639,10 +612,10 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 \begin{frame}{Clifford gate conjugation (cont'd)}
     \begin{block}{Exercise}
         Use Clifford gate conjugation to demonstrate the following error propagation rules:
-        $$ X \xrightarrow{\hat H} Z \xrightarrow{H} X $$
-        $$ X \xrightarrow{\hat S} Y \xrightarrow{S} -X $$
-        $$ I_1Z_1 \xrightarrow{\hat \CNOT_{1,2}} Z_1Z_2 $$
-        $$ I_1X_2 \xrightarrow{\hat \CNOT_{1,2}} I_1X_2$$
+        $$ X \xrightarrow{H} Z \xrightarrow{H} X $$
+        $$ X \xrightarrow{S} Y \xrightarrow{S} -X $$
+        $$ I_1Z_1 \xrightarrow{\CNOT_{1,2}} Z_1Z_2 $$
+        $$ I_1X_2 \xrightarrow{\CNOT_{1,2}} I_1X_2$$
     \end{block}
     \begin{flushright}
         \textit{Still round the corner there may wait\\
@@ -902,7 +875,7 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
 
 \end{frame}
 
-\begin{frame}{Application: the uncertainty principle}
+\begin{frame}{The uncertainty principle}
     \begin{block}{Definition}
         The expectation value of a Hermitian operator (or, observable) $A$ with respect to a particular normalized state vector $\ket\psi$ of equal dimension to $A$ is a scalar computed as: $$ \langle A \rangle = \bra\psi A \ket\psi $$
     \end{block}
@@ -914,7 +887,7 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
 \end{frame}
 
 
-\begin{frame}{Application: the uncertainty principle (cont'd)}
+\begin{frame}{The uncertainty principle (cont'd)}
     \begin{block}{Definition}
         The variance of an operator $A$, denoted $\Var(A)$, is computed as $\Var(A) = \langle A^2 \rangle - \langle A \rangle ^2$
     \end{block}
@@ -927,7 +900,7 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
     \end{block}
 \end{frame}
 
-\begin{frame}{Application: the uncertainty principle (cont'd)}
+\begin{frame}{The uncertainty principle (cont'd)}
     \begin{block}{Exercise}
         Verify the Robertson uncertainty relation for each distinct pair of Pauli matrices. (Hint: compute the expectation values in terms of basis vectors.)
     \end{block}
@@ -938,5 +911,16 @@ The Riesz representation theorem is how we ensure a bijective, normalization-pre
         \textit{Information is the resolution of uncertainty.}\\---Claude Shannon
     \end{flushright}
 \end{frame}
+
+\begin{comment}
+\begin{frame}{Density matrix}
+	\begin{block}{Remark}
+		When engineering quantum systems, it is often more useful to track changes in operators rather than the state itself. The density matrix unifies these concepts.
+	\end{block}
+	\begin{block}{Definition}
+		
+	\end{block}
+\end{frame}
+\end{comment}
 
 \end{document}
