@@ -18,6 +18,7 @@
 \newcommand{\F}{\mathbb F}
 \renewcommand{\O}{\mathcal O}
 \newcommand{\Var}{\text{Var}}
+\newcommand{\diag}{\text{diag}}
 \newcommand{\CNOT}{\text{CNOT}}
 \renewcommand{\H}{\mathcal{H}}
 \renewcommand{\vec}{\textbf}
@@ -248,7 +249,7 @@ $$
         Compute the operator $\ket 0 \bra 1$.
     \end{block}
     \begin{block}{Exercise}
-        Compute the ket $\bra - H \ket +$.
+        Compute the scalar $\bra - H \ket +$.
     \end{block}
     \begin{block}{Exercise}
         Show that for any state vector $\ket\psi$ that $\braket{\psi | \psi} = 1.$ (Use the identity $zz^* = |z|^2$ for all $z\in \C.$)
@@ -287,10 +288,6 @@ $$
 
 \begin{flushright}
     \textit{The orthogonal features, when combined,\\can explode into complexity.}\\---Yukihiro Matsumoto
-\end{flushright}
-
-\begin{flushright}
-    \textit{The endeavor to understand is the first and only basis of virtue.}\\---Baruch Spinoza
 \end{flushright}
 
 \end{frame}
@@ -336,7 +333,7 @@ The trace is independent of a chosen basis, meaning that if a linear map $A$, re
 
 \begin{frame}{Eigenstates}
 \begin{block}{Definition}
-A state vector $\ket\psi$ is the $\lambda$-eigenstate (or eigenvector) of a linear map $U$ if $U\ket\psi = \lambda \ket\psi$ for some $\lambda \in \R,$ where $\lambda$ is said to be an eigenvalue of $U$ (and corresponds to a measurement of a qubit).
+A state vector $\ket\psi$ is the $\lambda$-eigenstate (or eigenvector) of a linear map $U$ if $U\ket\psi = \lambda \ket\psi$ for some $\lambda \in \C,$ where $\lambda$ is said to be an eigenvalue of $U$.
 \end{block}
 
 \begin{block}{Example}
@@ -344,8 +341,8 @@ If $U\ket\psi = \ket\psi$, we say that $\ket\psi$ is the $+1$ eigenstate of $U$.
 \end{block}
 
 \begin{block}{Algorithm}
-To find the eigenvalues ($\lambda$) of a square matrix $A$, we may solve its characteristic equation: $$ \det(A - \lambda I) = \O $$
-The eigenvalues of a $2\times2$ matrix are the roots of its characteristic polynomial $ax^2 + bx + c = 0$, where $a = 1$, $b = -\tr(A)$, and $c=\det(A)$.
+To find the eigenvalues of a square matrix $A$, we may solve its characteristic equation: $$ \det(A - \lambda I) = \O $$
+The eigenvalues of a $2\times2$ matrix are the roots of its characteristic polynomial $ax^2 + bx + c$, where $a = 1$, $b = -\tr(A)$, and $c=\det(A)$.
 \end{block}
 
 \end{frame}
@@ -390,7 +387,7 @@ For quantum operators $A$ and $B$, $(AB)\ket\psi$ means ``apply $B$ first, then 
 \begin{frame}{The commutator (cont'd)}
 
 \begin{block}{Corollary}
-    For commuting matrices, $[A,B]=\mathcal O$ (the zero matrix).
+    For commuting matrices, $[A,B]=\O$ (the zero matrix).
 \end{block}
 
 \begin{block}{Exercise}
@@ -431,17 +428,21 @@ The transpose of a matrix $U$ is denoted $U^T$ and is obtained by systematically
 \begin{frame}{Normal matrices (cont'd)}
 
 \begin{block}{Definition}
-     A matrix $A$ is normal if it commutes with its adjoint, meaning $[A, A^\dagger]=\mathcal O$.
+     A matrix $A$ is normal if it commutes with its adjoint, meaning $[A, A^\dagger]=\O$.
 \end{block}
 
 \begin{block}{Definition}
-A matrix $U$ is Hermitian if it is self-adjoint, that is, $U=U^\dagger.$
+A matrix $A$ is Hermitian if it is self-adjoint, that is, $A=A^\dagger.$
 \end{block}
 
 \begin{block}{Definition}
 
-A matrix $U$ is unitary if $UU^\dagger = U^\dagger U = I.$
+A matrix $U$ is unitary if $UU^\dagger = U^\dagger U = I,$ so $U^{-1} = U^\dagger$.
 
+\end{block}
+
+\begin{block}{Remark}
+Unitary operators are ``length-preserving," meaning that if $U$ is a unitary matrix, and $U \vec v = \vec v '$, then $|\vec v| = |\vec v'|$. This property is important because unitary operators must preserve the normalization condition of a quantum state.
 \end{block}
 
 \end{frame}
@@ -454,6 +455,10 @@ A matrix $U$ is unitary if $UU^\dagger = U^\dagger U = I.$
 
 \begin{block}{Exercise}
     Show that every unitary matrix and Hermitian matrix is normal.
+\end{block}
+
+\begin{block}{Exercise}
+	Show that the eigenvalues of a Hermitian matrix are real-valued. (Hint: use the inner product)
 \end{block}
 
 \begin{block}{Exercise}
@@ -482,7 +487,7 @@ $$ \ket\phi  \otimes \ket\psi = \begin{pmatrix} \phi_1 \\ \phi_2 \end{pmatrix} \
     \phi_2\psi_2
 \end{pmatrix}
 $$
-and is sometimes denoted $\ket\phi\ket\psi$ or $\ket{\phi\psi}$.
+and is also denoted $\ket\phi\ket\psi$ or $\ket{\phi\psi}$.
 \end{block}
 
 \begin{block}{Remark}
@@ -573,7 +578,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 
 \begin{frame}{Clifford gate conjugation}
     \begin{block}{Definition}
-        A Clifford operator $C$ ``conjugates within'' the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' =  C P  C^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $\hat C$.
+        A Clifford operator $C$ is the ``normalizer'' of the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' =  C P  C^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $C$.
     \end{block}
     \begin{block}{Remark}
         Any Clifford operator can be generated from Hadamard, $\CNOT$, and/or $S$ operators. The Pauli operators are themselves Clifford operators. The ``Clifford + $T$'' gates suffice to construct any quantum circuit.
@@ -771,7 +776,7 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 \begin{frame}{Spectral Theorem}
 
 \begin{block}{Definition}
-A diagonal matrix is a matrix such that all entries outside the main diagonal are zero.
+A diagonal matrix is a matrix such that all entries outside the main diagonal are zero. They are often denoted as $\diag(a_1, \ldots, a_n)$.
 \end{block}
 
 \begin{block}{Definition}
