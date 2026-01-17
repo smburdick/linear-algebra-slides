@@ -39,8 +39,6 @@
     urlcolor=blue
 }
 
-%\usefonttheme{serif}
-
 \begin{document}
 
 \frame{\titlepage}
@@ -51,7 +49,6 @@
     \item Vector spaces
     \item Basis vectors
     \item Linear maps
-    \item Change of basis
     \item Dirac notation
     \item Subspaces
     \item Orthonormal basis
@@ -60,8 +57,8 @@
     \item Eigenstates
     \item The commutator
     \item Normal matrices
+    \item Change of basis
     \item The Kronecker product
-    \item Projection operators
     %\item * A bit of group theory
     \end{enumerate}
 \end{multicols}
@@ -95,6 +92,7 @@
 
 \begin{frame}{Appendix: Advanced applications in quantum mechanics}
 \begin{enumerate}
+    \item Projection operators
     \item Spectral Theorem
     \item Linear functionals and dual spaces
     \item Riesz Representation Theorem
@@ -187,17 +185,6 @@ is a linear map $H:\C^2 \to \C^2$ acting on a single qubit $\binom{\alpha}{\beta
     \end{flushright}
 \end{frame}
 
-\begin{frame}{Change of basis}
-    \begin{block}{Definition}
-        Given two vector spaces $V$ and $W$, each of dimension $n$, the change of basis matrix is an $n\times n$ matrix $\mathcal C$. Let $\mathcal V$ and $\mathcal W$ denote matrices comprised of the basis vectors of $V$ and basis vectors $W$ expressed in terms of the basis vectors of $V$, respectively. Then $\mathcal V = \mathcal C\mathcal W\mathcal C^{-1}$.
-    \end{block}
-    \begin{block}{Exercise}
-        Verify that the Hadamard matrix $H$ functions as a change of basis matrix between vectors in the $X$ basis and the $Z$ basis, and vice versa.
-    \end{block}
-    \begin{flushright}
-        \textit{Change in all things is sweet.}\\---Aristotle
-    \end{flushright}
-\end{frame}
 
 \begin{frame}{Dirac notation}
 
@@ -470,6 +457,18 @@ Show that every quantum operator is unitary.
 
 \end{frame}
 
+\begin{frame}{Change of basis}
+    \begin{block}{Definition}
+        Given two vector spaces $V$ and $W$, each of dimension $n$, the change of basis matrix is a unitary $n\times n$ matrix $\mathcal C$. Let $\mathcal V$ and $\mathcal W$ denote matrices comprised of the basis vectors of $V$ and basis vectors $W$ expressed in terms of the basis vectors of $V$, respectively. Then $\mathcal V = \mathcal C\mathcal W\mathcal C^\dagger$.
+    \end{block}
+    \begin{block}{Exercise}
+        Verify that the Hadamard matrix $H$ functions as a change of basis matrix between vectors in the $X$ basis and the $Z$ basis, and vice versa.
+    \end{block}
+    \begin{flushright}
+        \textit{Change in all things is sweet.}\\---Aristotle
+    \end{flushright}
+\end{frame}
+
 \begin{frame}{The Kronecker product}
 
 \begin{block}{Definition}
@@ -516,65 +515,7 @@ You can take Kronecker products of matrices as well; the new object's dimension 
     %\end{flushright}
 \end{frame}
 
-\begin{frame}{Projection operators}
-    \begin{block}{Definition}
-A Hilbert space $\mathcal H$ in quantum computing is a complex inner product space, that is, a vector space over $\C^n$ endowed with an inner product operation.
-\end{block}
-    \begin{block}{Definition}
-        A projection operator, denoted $\hat P$, when applied to a quantum state $\ket\psi \in \H$, where $\H$ is a Hilbert space, returns a vector in a subspace of $\H$ defined with respect to a specific state $\ket a$, and is defined as $$ \hat P_a = \ket a\bra{a}, $$ where $\ket a$ is in an orthonormal basis of $\H$.
-    \end{block}
-\end{frame}
 
-\begin{frame}{Projection operators (cont'd)}
-	    \begin{block}{Remark}
-        Projection operators are used to model quantum measurement; in quantum computing, they project a qubit into a specific basis, such as the $X$ or $Z$ basis (where only one of two outcomes are possible).
-    \end{block}
-
-    \begin{block}{Example}
-        For a single qubit in the general state $\ket\psi=\alpha\ket0 + \beta\ket1$, a measurement in the $Z$ basis $\{\ket0,\ket1\}$ is described by two projection operators:
-        \begin{itemize}
-            \item Projection operator for outcome $\ket 0: \hat P_0 = \ket 0\bra0$
-            \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$
-            \item  Note that $p(0) = |\alpha|^2$ and  $p(1) = |\beta|^2$
-        \end{itemize}
-    \end{block}
-
-\end{frame}
-
-\begin{frame}{Projection operators (cont'd)}
-	    \begin{block}{Remark}
-    Projection operators are idempotent, meaning that $\hat P^2 = \hat P$, and Hermitian, meaning that $\hat P^\dagger = \hat P$.
-    \end{block}
-	    \begin{block}{Remark}
-        The probability of measuring $\ket\psi$ as $\ket a$ can be computed as $$ p(a) = |\braket{a|\psi}|^2  = \bra \psi \hat P_a\ket\psi.$$
-    \end{block}
-	  \begin{block}{Exercise}
-        Compute the matrices $\hat P_0$ and $\hat P_1$.
-    \end{block}
-    \begin{block}{Exercise}
-    	Show that any projection operator $\hat P$ is not unitary.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Projection operators (cont'd)}
-
-    \begin{block}{Definition}
-        The CNOT gate has the following matrix representation: $$ \CNOT = \begin{pmatrix}
-            I & \O \\ \O & X
-        \end{pmatrix} = \begin{pmatrix}
-            1 & 0 & 0 & 0 \\
-            0 & 1 & 0 & 0 \\
-            0 & 0 & 0 & 1 \\
-            0 & 0 & 1 & 0
-        \end{pmatrix}. $$
-    \end{block}
-    \begin{block}{Exercise}
-        Show that the conditional action of the CNOT gate can be written as $$ \CNOT = (\ket0\bra0\otimes I) + (\ket1\bra1\otimes X).$$
-    \end{block}
-	\begin{flushright}
-		\textit{Compliments and criticism are all ultimately based on some form of projection.}\\---Billy Corgan
-	\end{flushright}
-\end{frame}
 
 \begin{frame}{Clifford gate conjugation}
     \begin{block}{Definition}
@@ -770,6 +711,66 @@ A Hilbert space $\mathcal H$ in quantum computing is a complex inner product spa
 		\end{center}
 		In this geometry, each point represents a physical qubit. Each line (including the circle) touches three qubits, and taking the complement of each line of qubits yields one of the stabilizers. Six of these complements correspond to the six stabilizer generators (three $X$ stabilizers, three $Z$ stabilizers). The last line represents logical $Z$.
  		\end{block}
+\end{frame}
+
+\begin{frame}{Projection operators}
+    \begin{block}{Definition}
+A Hilbert space $\mathcal H$ in quantum computing is a complex inner product space, that is, a vector space over $\C^n$ endowed with an inner product operation.
+\end{block}
+    \begin{block}{Definition}
+        A projection operator, denoted $\hat P$, when applied to a quantum state $\ket\psi \in \H$, where $\H$ is a Hilbert space, returns a vector in a subspace of $\H$ defined with respect to a specific state $\ket a$, and is defined as $$ \hat P_a = \ket a\bra{a}, $$ where $\ket a$ is in an orthonormal basis of $\H$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+	    \begin{block}{Remark}
+        Projection operators are used to model quantum measurement; in quantum computing, they project a qubit into a specific basis, such as the $X$ or $Z$ basis (where only one of two outcomes are possible).
+    \end{block}
+
+    \begin{block}{Example}
+        For a single qubit in the general state $\ket\psi=\alpha\ket0 + \beta\ket1$, a measurement in the $Z$ basis $\{\ket0,\ket1\}$ is described by two projection operators:
+        \begin{itemize}
+            \item Projection operator for outcome $\ket 0: \hat P_0 = \ket 0\bra0$
+            \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$
+            \item  Note that $p(0) = |\alpha|^2$ and  $p(1) = |\beta|^2$
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+	    \begin{block}{Remark}
+    Projection operators are idempotent, meaning that $\hat P^2 = \hat P$, and Hermitian, meaning that $\hat P^\dagger = \hat P$.
+    \end{block}
+	    \begin{block}{Remark}
+        The probability of measuring $\ket\psi$ as $\ket a$ can be computed as $$ p(a) = |\braket{a|\psi}|^2  = \bra \psi \hat P_a\ket\psi.$$
+    \end{block}
+	  \begin{block}{Exercise}
+        Compute the matrices $\hat P_0$ and $\hat P_1$.
+    \end{block}
+    \begin{block}{Exercise}
+    	Show that any projection operator $\hat P$ is not unitary.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+
+    \begin{block}{Definition}
+        The CNOT gate has the following matrix representation: $$ \CNOT = \begin{pmatrix}
+            I & \O \\ \O & X
+        \end{pmatrix} = \begin{pmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0
+        \end{pmatrix}. $$
+    \end{block}
+    \begin{block}{Exercise}
+        Show that the conditional action of the CNOT gate can be written as $$ \CNOT = (\ket0\bra0\otimes I) + (\ket1\bra1\otimes X).$$
+    \end{block}
+	\begin{flushright}
+		\textit{Compliments and criticism are all ultimately based on some form of projection.}\\---Billy Corgan
+	\end{flushright}
 \end{frame}
 
 
