@@ -502,20 +502,25 @@ You can take Kronecker products of matrices as well; the new object's dimension 
             a_{11} B & a_{12}B \\ a_{21}B & a_{22}B
         \end{pmatrix}, $$ which is a $4\times4$ matrix.
     \end{block}
+
+    \begin{block}{Remark}
+        Stabilizers are Kronecker products of many Pauli operators, for example $X^{\otimes 4} = XXXX$ or $ZZZZ$ which have a more compact binary representation we'll explore later. By convention, such products are known as Pauli strings, and aren't matrix products.
+    \end{block}
+\end{frame}
+
+\begin{frame}{The Kronecker product (cont'd)}
     \begin{block}{Exercise}
         Compute the Kronecker products $X\otimes X$ and $T\otimes T$, where $T=\begin{pmatrix}
             1 & 0 \\ 0 & e^{i\pi/4}
         \end{pmatrix}$.
     \end{block}
-    \begin{block}{Remark}
-        Stabilizers are Kronecker products of many Pauli operators, for example $X^{\otimes 4} = XXXX$ or $ZZZZ$ which have a more compact binary representation we'll explore later. By convention, such products are known as Pauli strings, and aren't matrix products.
-    \end{block}
-    %\begin{flushright}
-     %   \textit{God created the integers; all else is the work of man.}\\---Leopold Kronecker
-    %\end{flushright}
+	\begin{block}{Exercise}
+		Show the mixed-product property: for $n\times n$ matrices $A, B, C, D$, $$ (A \otimes B)(C \otimes D) = (AC \otimes BD). $$
+	\end{block}
+	 \begin{flushright}
+          \textit{God created the integers; all else is the work of man.}\\---Leopold Kronecker
+        \end{flushright}
 \end{frame}
-
-
 
 \begin{frame}{Clifford gate conjugation}
     \begin{block}{Definition}
@@ -696,7 +701,7 @@ You can take Kronecker products of matrices as well; the new object's dimension 
 
 \begin{frame}{The Steane code (cont'd)}
 	\begin{block}{Definition}
-		A logical Clifford operator $U_L$ maps a stabilizer $S_i$ to another stabilizer in its group, $S_j$: $$ U_L S_i U_L^\dagger = S_j $$
+		A logical Clifford operator $U_L$ normalizes a stabilizer $S_i$ to another stabilizer in its group, $S_j$: $$ U_L S_i U_L^\dagger = S_j $$
 	\end{block}
 	\begin{block}{Remark}
 		The non-Clifford operator $T_L$ doesn't have a simple linear (symplectic) representation, making it a challenge to implement in TQEC.
