@@ -53,6 +53,7 @@
     \item Subspaces
     \item Orthonormal basis
     \item Matrix rank
+    \item The kernel
     \item Matrix trace
     \item Eigenstates
     \item The commutator
@@ -60,6 +61,8 @@
     \item Change of basis
     \item The Kronecker product
     %\item * A bit of group theory
+    \item Projection operators
+    \item Spectral Theorem
     \end{enumerate}
 \end{multicols}
 \end{frame}
@@ -92,8 +95,6 @@
 
 \begin{frame}{Appendix: Advanced applications in quantum mechanics}
 \begin{enumerate}
-    \item Projection operators
-    \item Spectral Theorem
     \item Linear functionals and dual spaces
     \item Riesz Representation Theorem
     \item The uncertainty principle
@@ -110,6 +111,10 @@ We assume existing familiarity with sets, functions, matrices, vectors, summatio
 \begin{flushright}
     \textit{I discovered that the library is the real school.}\\---Ray Bradbury
 \end{flushright}
+\end{frame}
+
+\begin{frame}{Part I: Mathematical foundations}
+
 \end{frame}
 
 \begin{frame}{Vector spaces}
@@ -288,6 +293,18 @@ $$
 	The matrix $$ \begin{pmatrix} 1 & 0 & 1 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} $$ has rank 2, since the third column can be expressed as a sum of the first two columns. The first 2 columns span a subspace of $\C^3$. As an exercise, use set-builder notation to define this subspace.
 \end{block}
 
+\end{frame}
+
+\begin{frame}{The kernel}
+\begin{block}{Definition}
+	The kernel of a linear map $T : V \to W$ is the set of vectors in $V$ that map to the zero vector in $W$, that is, $$ \ker (T) = \{ \vec v\in V: T(\vec v) = \vec0_W \} = T^{-1}(\vec 0_W) $$
+\end{block}
+\begin{block}{Exercise}
+	What is $\ker (\C^n)$?
+\end{block}
+\begin{block}{Exercise}
+	Show that $\ker T$ is a subspace of $T$.
+\end{block}
 \end{frame}
 
 \begin{frame}{Matrix trace}
@@ -522,6 +539,121 @@ You can take Kronecker products of matrices as well; the new object's dimension 
         \end{flushright}
 \end{frame}
 
+\begin{frame}{Projection operators}
+    \begin{block}{Definition}
+A Hilbert space $\mathcal H$ in quantum computing is a complex inner product space, that is, a vector space over $\C^n$ endowed with an inner product operation.
+\end{block}
+    \begin{block}{Definition}
+        A projection operator, denoted $\hat P$, when applied to a quantum state $\ket\psi \in \H$, where $\H$ is a Hilbert space, returns a vector in a subspace of $\H$ defined with respect to a specific state $\ket a$, and is defined as $$ \hat P_a = \ket a\bra{a}, $$ where $\ket a$ is in an orthonormal basis of $\H$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+	    \begin{block}{Remark}
+        Projection operators are used to model quantum measurement; in quantum computing, they project a qubit into a specific basis, such as the $X$ or $Z$ basis (where only one of two outcomes are possible).
+    \end{block}
+
+    \begin{block}{Example}
+        For a single qubit in the general state $\ket\psi=\alpha\ket0 + \beta\ket1$, a measurement in the $Z$ basis $\{\ket0,\ket1\}$ is described by two projection operators:
+        \begin{itemize}
+            \item Projection operator for outcome $\ket 0: \hat P_0 = \ket 0\bra0$
+            \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$
+            \item  Note that $p(0) = |\alpha|^2$ and  $p(1) = |\beta|^2$
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+	    \begin{block}{Remark}
+    Projection operators are idempotent, meaning that $\hat P^2 = \hat P$, and Hermitian, meaning that $\hat P^\dagger = \hat P$.
+    \end{block}
+	    \begin{block}{Remark}
+        The probability of measuring $\ket\psi$ as $\ket a$ can be computed as $$ p(a) = |\braket{a|\psi}|^2  = \bra \psi \hat P_a\ket\psi.$$
+    \end{block}
+	  \begin{block}{Exercise}
+        Compute the matrices $\hat P_0$ and $\hat P_1$.
+    \end{block}
+    \begin{block}{Exercise}
+    	Show that any projection operator $\hat P$ is not unitary.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Projection operators (cont'd)}
+
+    \begin{block}{Definition}
+        The CNOT gate has the following matrix representation: $$ \CNOT = \begin{pmatrix}
+            I & \O \\ \O & X
+        \end{pmatrix} = \begin{pmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0
+        \end{pmatrix}. $$
+    \end{block}
+    \begin{block}{Exercise}
+        Show that the conditional action of the CNOT gate can be written as $$ \CNOT = (\ket0\bra0\otimes I) + (\ket1\bra1\otimes X).$$
+    \end{block}
+	\begin{flushright}
+		\textit{Compliments and criticism are all ultimately based on some form of projection.}\\---Billy Corgan
+	\end{flushright}
+\end{frame}
+
+
+\begin{frame}{Spectral Theorem}
+
+\begin{block}{Definition}
+A diagonal matrix is a matrix such that all entries outside the main diagonal are zero. They are often denoted as $\diag(a_1, \ldots, a_n)$.
+\end{block}
+
+\begin{block}{Definition}
+The spectrum of a matrix $A$ is the set of all eigenvalues of $A$.
+\end{block}
+
+\begin{block}{Theorem}
+If a matrix $A$ is normal, then $A$ is unitarily diagonalizable, meaning that $A=UDU^\dagger$ for some unitary matrix $U$ comprising the eigenvectors of $A$, and a diagonal matrix $D$, where the diagonal values of $D$ is the spectrum of $A$. Such a factorization is called the spectral decomposition of $A$.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Spectral Theorem (cont'd)}
+
+\begin{block}{Remark}
+    The spectral decomposition of any $n \times n$ Hermitian matrix $A$ is
+    $$ A = \sum_{k=1}^n\lambda_k \ket{\psi}_k\bra{\psi}_k , $$
+    where $\lambda_k$ is an eigenvalue of $A$ and $\ket{\psi}_k$ is its corresponding orthonormal eigenstate.
+\end{block}
+
+\begin{block}{Example}
+    The spectral theorem yields the following decomposition of the Pauli $Z$ matrix in terms of projection operators:
+    $$ Z = \begin{pmatrix}
+        1 & 0 \\ 0 & -1
+    \end{pmatrix} = (1)\hat{P}_1 + (-1)\hat{P}_{-1} $$ since the eigenvalues of $Z$ are $+1$ and $-1$.
+\end{block}
+\end{frame}
+\begin{frame}{Spectral Theorem (cont'd)}
+
+\begin{block}{Remark}
+The spectral theorem tells us that, since the Pauli matrices $\{X,Y,Z\}$ are Hermitian, their eigenvalues are $\pm 1$ and their eigenvectors form a mutually orthogonal and complete basis of the qubit state space $\C^2$, justifying their use as the fundamental observables of a qubit. The Pauli matrices create a basis for all $2\times2$ Hermitian matrices.
+\end{block}
+
+
+
+\begin{flushright}
+    \textit{I consider nature a vast chemical laboratory in which all kinds of composition and decompositions are formed.}\\---Antoine Lavoisier
+\end{flushright}
+
+\begin{flushright}
+    \textit{This isn't right. This isn't even wrong.}\\---Wolfgang Pauli
+\end{flushright}
+
+
+\end{frame}
+
+\begin{frame}{Part II: A tour of quantum error correction}
+
+\end{frame}
+
 \begin{frame}{Clifford gate conjugation}
     \begin{block}{Definition}
         A Clifford operator $C$ is the ``normalizer'' of the Pauli operators $ \{ I, X, Y, Z\}$; that is: $$ P' =  C P  C^\dagger $$ where $P$ and $P'$ are Kronecker products of Pauli operators in equal dimension to $C$.
@@ -717,118 +849,6 @@ You can take Kronecker products of matrices as well; the new object's dimension 
 		In this geometry, each point represents a physical qubit. Each line (including the circle) touches three qubits, and taking the complement of each line of qubits yields one of the stabilizers. Six of these complements correspond to the six stabilizer generators (three $X$ stabilizers, three $Z$ stabilizers). The last line represents logical $Z$.
  		\end{block}
 \end{frame}
-
-\begin{frame}{Projection operators}
-    \begin{block}{Definition}
-A Hilbert space $\mathcal H$ in quantum computing is a complex inner product space, that is, a vector space over $\C^n$ endowed with an inner product operation.
-\end{block}
-    \begin{block}{Definition}
-        A projection operator, denoted $\hat P$, when applied to a quantum state $\ket\psi \in \H$, where $\H$ is a Hilbert space, returns a vector in a subspace of $\H$ defined with respect to a specific state $\ket a$, and is defined as $$ \hat P_a = \ket a\bra{a}, $$ where $\ket a$ is in an orthonormal basis of $\H$.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Projection operators (cont'd)}
-	    \begin{block}{Remark}
-        Projection operators are used to model quantum measurement; in quantum computing, they project a qubit into a specific basis, such as the $X$ or $Z$ basis (where only one of two outcomes are possible).
-    \end{block}
-
-    \begin{block}{Example}
-        For a single qubit in the general state $\ket\psi=\alpha\ket0 + \beta\ket1$, a measurement in the $Z$ basis $\{\ket0,\ket1\}$ is described by two projection operators:
-        \begin{itemize}
-            \item Projection operator for outcome $\ket 0: \hat P_0 = \ket 0\bra0$
-            \item Projection operator for outcome $\ket 1: \hat P_1 = \ket1\bra1$
-            \item  Note that $p(0) = |\alpha|^2$ and  $p(1) = |\beta|^2$
-        \end{itemize}
-    \end{block}
-
-\end{frame}
-
-\begin{frame}{Projection operators (cont'd)}
-	    \begin{block}{Remark}
-    Projection operators are idempotent, meaning that $\hat P^2 = \hat P$, and Hermitian, meaning that $\hat P^\dagger = \hat P$.
-    \end{block}
-	    \begin{block}{Remark}
-        The probability of measuring $\ket\psi$ as $\ket a$ can be computed as $$ p(a) = |\braket{a|\psi}|^2  = \bra \psi \hat P_a\ket\psi.$$
-    \end{block}
-	  \begin{block}{Exercise}
-        Compute the matrices $\hat P_0$ and $\hat P_1$.
-    \end{block}
-    \begin{block}{Exercise}
-    	Show that any projection operator $\hat P$ is not unitary.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Projection operators (cont'd)}
-
-    \begin{block}{Definition}
-        The CNOT gate has the following matrix representation: $$ \CNOT = \begin{pmatrix}
-            I & \O \\ \O & X
-        \end{pmatrix} = \begin{pmatrix}
-            1 & 0 & 0 & 0 \\
-            0 & 1 & 0 & 0 \\
-            0 & 0 & 0 & 1 \\
-            0 & 0 & 1 & 0
-        \end{pmatrix}. $$
-    \end{block}
-    \begin{block}{Exercise}
-        Show that the conditional action of the CNOT gate can be written as $$ \CNOT = (\ket0\bra0\otimes I) + (\ket1\bra1\otimes X).$$
-    \end{block}
-	\begin{flushright}
-		\textit{Compliments and criticism are all ultimately based on some form of projection.}\\---Billy Corgan
-	\end{flushright}
-\end{frame}
-
-
-\begin{frame}{Spectral Theorem}
-
-\begin{block}{Definition}
-A diagonal matrix is a matrix such that all entries outside the main diagonal are zero. They are often denoted as $\diag(a_1, \ldots, a_n)$.
-\end{block}
-
-\begin{block}{Definition}
-The spectrum of a matrix $A$ is the set of all eigenvalues of $A$.
-\end{block}
-
-\begin{block}{Theorem}
-If a matrix $A$ is normal, then $A$ is unitarily diagonalizable, meaning that $A=UDU^\dagger$ for some unitary matrix $U$ comprising the eigenvectors of $A$, and a diagonal matrix $D$, where the diagonal values of $D$ is the spectrum of $A$. Such a factorization is called the spectral decomposition of $A$.
-\end{block}
-
-\end{frame}
-
-\begin{frame}{Spectral Theorem (cont'd)}
-
-\begin{block}{Remark}
-    The spectral decomposition of any $n \times n$ Hermitian matrix $A$ is
-    $$ A = \sum_{k=1}^n\lambda_k \ket{\psi}_k\bra{\psi}_k , $$
-    where $\lambda_k$ is an eigenvalue of $A$ and $\ket{\psi}_k$ is its corresponding orthonormal eigenstate.
-\end{block}
-
-\begin{block}{Example}
-    The spectral theorem yields the following decomposition of the Pauli $Z$ matrix in terms of projection operators:
-    $$ Z = \begin{pmatrix}
-        1 & 0 \\ 0 & -1
-    \end{pmatrix} = (1)\hat{P}_1 + (-1)\hat{P}_{-1} $$ since the eigenvalues of $Z$ are $+1$ and $-1$.
-\end{block}
-\end{frame}
-\begin{frame}{Spectral Theorem (cont'd)}
-
-\begin{block}{Remark}
-The spectral theorem tells us that, since the Pauli matrices $\{X,Y,Z\}$ are Hermitian, their eigenvalues are $\pm 1$ and their eigenvectors form a mutually orthogonal and complete basis of the qubit state space $\C^2$, justifying their use as the fundamental observables of a qubit. The Pauli matrices create a basis for all $2\times2$ Hermitian matrices.
-\end{block}
-
-
-
-\begin{flushright}
-    \textit{I consider nature a vast chemical laboratory in which all kinds of composition and decompositions are formed.}\\---Antoine Lavoisier
-\end{flushright}
-
-\begin{flushright}
-    \textit{This isn't right. This isn't even wrong.}\\---Wolfgang Pauli
-\end{flushright}
-
-
-\end{frame}
-
 
 \begin{frame}{Linear functionals and dual spaces}
 \begin{block}{Definition}
