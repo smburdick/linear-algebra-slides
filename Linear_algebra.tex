@@ -52,6 +52,7 @@
     \item Dirac notation
     \item Subspaces
     \item Orthonormal basis
+    \item Global and relative phase
     \item Matrix rank
     \item The kernel
     \item Matrix trace
@@ -294,6 +295,30 @@ $$
     \textit{The orthogonal features, when combined,\\can explode into complexity.}\\---Yukihiro Matsumoto
 \end{flushright}
 
+\end{frame}
+
+\begin{frame}{Global and relative phase}
+
+\begin{block}{Definition}
+When we visualize a qubit (in the Z basis) using the Bloch sphere, we can see how to represent the probability amplitudes of qubit using spherical coordinates:
+$$ \ket\psi = e^{i\gamma} \left [ \cos\left(\frac{\theta}{2}\right) \ket 0 + e^{i\phi} \sin\left(\frac{\theta}{2}\right) \ket1 \right ]. $$
+In this representation, we say $\theta$ is the polar angle that parameterizes the probability amplitude of $\ket\psi$, since $\cos^2(\theta/2) +\sin^2(\theta/2) = 1$. The azimuthal angle $\phi$ is the relative phase of $\ket\psi$, and $e^{i\gamma}$ is the global phase.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Global and relative phase (cont'd)}
+
+\begin{block}{Remark}
+Since $\left|e^{i\gamma}\right| = 1$, we can factor our the global phase when calculating the probability amplitudes of $\ket\psi$. Therefore, we can say that $\ket\psi \sim e^{i\gamma} \ket\psi$, where $\sim$ denotes the equivalence of two states up to their probability amplitudes.
+\end{block}
+
+\begin{block}{Exercise}
+Rewrite $\ket -$ using spherical coordinates.
+\end{block}
+\begin{block}{Exercise}
+Why is a $Z$ error referred to as a ``phase flip''?
+\end{block}
 \end{frame}
 
 \begin{frame}{Matrix rank}
