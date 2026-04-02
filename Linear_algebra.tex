@@ -60,6 +60,7 @@
     \item The commutator
     \item Normal matrices
     \item Change of basis
+    \item Matrix exponentiation
     \item The Kronecker product
     %\item * A bit of group theory
     \item Projection operators
@@ -525,6 +526,19 @@ Show that every quantum operator is unitary.
     \begin{flushright}
         \textit{Change in all things is sweet.}\\---Aristotle
     \end{flushright}
+\end{frame}
+
+\begin{frame}{Matrix exponentiation}
+    \begin{block}{Definition}
+        If $A$ is an $n \times n$ matrix, then
+        $$ \exp A = e^A = \sum_{n=0}^\infty \frac{A^n}{n!}. $$
+    \end{block}
+    \begin{block}{Exercise}
+        Show that if $AB=BA$, then $\exp(A + B) = \exp A \exp B.$
+    \end{block}
+    \begin{block}{Exercise}
+        Show that if $A$ is Hermitian, then so is $\exp A$.
+    \end{block}
 \end{frame}
 
 \begin{frame}{The Kronecker product}
