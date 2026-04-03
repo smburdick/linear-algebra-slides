@@ -531,13 +531,14 @@ Show that every quantum operator is unitary.
 \begin{frame}{Matrix exponentiation}
     \begin{block}{Definition}
         If $A$ is an $n \times n$ matrix, then
-        $$ \exp A = e^A = \sum_{n=0}^\infty \frac{A^n}{n!}. $$
-    \end{block}
-    \begin{block}{Exercise}
-        Show that if $AB=BA$, then $\exp(A + B) = \exp A \exp B.$
+        $$ \exp A = e^A = \sum_{n=0}^\infty \frac{A^n}{n!}, $$
+        where $A^0 = I$ by convention.
     \end{block}
     \begin{block}{Exercise}
         Show that if $A$ is Hermitian, then so is $\exp A$.
+    \end{block}
+    \begin{block}{Exercise}
+        Show that if $AB=BA$, then $\exp(A + B) = \exp A \exp B.$
     \end{block}
 \end{frame}
 
