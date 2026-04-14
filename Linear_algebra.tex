@@ -382,18 +382,23 @@ A state vector $\ket\psi$ is the $\lambda$-eigenstate (or eigenvector) of a line
 If $U\ket\psi = \ket\psi$, we say that $\ket\psi$ is the $+1$ eigenstate of $U$.
 \end{block}
 
+\end{frame}
+
+\begin{frame}
 \begin{block}{Algorithm}
-To find the eigenvalues of a square matrix $A$, we may solve its characteristic equation: $$ \det(A - \lambda I) = \O $$
+\begin{enumerate}
+\item To find the eigenvalues $\lambda_1,\ldots,\lambda_n$ of a square matrix $A$, we may solve its characteristic equation: $$ \det(A - \lambda I) = \O $$.
+\item To find the eigenvectors, substitute each $\lambda$ into $A'(\lambda)=A-\lambda I,$ then solve for $\vec x$, where $A'(\lambda)\vec x = \vec 0$
+\end{enumerate}
+\end{block}
+
+\begin{block}{Remark}
 The eigenvalues of a $2\times2$ matrix are the roots of its characteristic polynomial $ax^2 + bx + c$, where $a = 1$, $b = -\tr(A)$, and $c=\det(A)$.
 \end{block}
 
 \end{frame}
 
 \begin{frame}{Eigenstates (cont'd)}
-
-\begin{block}{Exercise}
-	Find the eigenvalues of the Pauli matrices $\{I, X, Y, Z\}$.
-\end{block}
 
 \begin{block}{Exercise}
 Show that $\ket+$ and $\ket-$ are the $+1$ and $-1$ eigenstates of $X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, respectively.
@@ -516,17 +521,17 @@ Show that every quantum operator is unitary.
 
 \end{frame}
 
-\begin{frame}{Change of basis}
-    \begin{block}{Definition}
-        Given two vector spaces $V$ and $W$, each of dimension $n$, the change of basis matrix is a unitary $n\times n$ matrix $\mathcal C$. Let $\mathcal V$ and $\mathcal W$ denote matrices comprised of the basis vectors of $V$ and basis vectors $W$ expressed in terms of the basis vectors of $V$, respectively. Then $\mathcal V = \mathcal C\mathcal W\mathcal C^\dagger$.
-    \end{block}
-    \begin{block}{Exercise}
-        Verify that the Hadamard matrix $H$ functions as a change of basis matrix between vectors in the $X$ basis and the $Z$ basis, and vice versa.
-    \end{block}
-    \begin{flushright}
-        \textit{Change in all things is sweet.}\\---Aristotle
-    \end{flushright}
-\end{frame}
+% \begin{frame}{Change of basis}
+%     \begin{block}{Definition}
+%         Given two vector spaces $V$ and $W$, each of dimension $n$, the change of basis matrix is a unitary $n\times n$ matrix $\mathcal C$. Let $\mathcal V$ and $\mathcal W$ denote matrices comprised of the basis vectors of $V$ and basis vectors $W$ expressed in terms of the basis vectors of $V$, respectively. Then $\mathcal V = \mathcal C\mathcal W\mathcal C^\dagger$.
+%     \end{block}
+%     \begin{block}{Exercise}
+%         Verify that the Hadamard matrix $H$ functions as a change of basis matrix between vectors in the $X$ basis and the $Z$ basis, and vice versa.
+%     \end{block}
+%     \begin{flushright}
+%         \textit{Change in all things is sweet.}\\---Aristotle
+%     \end{flushright}
+% \end{frame}
 
 \begin{frame}{Matrix exponentiation}
     \begin{block}{Definition}
