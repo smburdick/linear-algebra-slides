@@ -547,6 +547,18 @@ Show that every quantum operator is unitary.
     \end{block}
 \end{frame}
 
+\begin{frame}{Matrix exponentiation (cont'd)}
+    \begin{block}{Definition}
+        The logarithm of a matrix, $\log A$, is a matrix satisfying $e^{\log A} = A$.
+    \end{block}
+    \begin{block}{Algorithm}
+        To prevent the definition from being circular, consider the case where $A$ is
+        diagonalizable, such that $A=V^{-1}DV$. Then $\log A=V^{-1}\log (D) V,$ where
+        $\log D=\diag(\lambda_1,\ldots,\lambda_n)$, where $\lambda_1,\ldots,\lambda_n$
+        are the eigenvalues of $A$.
+    \end{block}
+\end{frame}
+
 \begin{frame}{The Kronecker product}
 
 \begin{block}{Definition}
